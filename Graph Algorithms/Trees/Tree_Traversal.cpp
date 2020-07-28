@@ -4,11 +4,11 @@ using namespace std;
 
 vector<vector<int> > adj(N,vector<int>());
 
-void dfs(int s, int p){
-    cout<<s<<" ";
-    for(auto x : adj[s])
-        if(x!=p)
-        dfs(x,s);
+void dfs(int cur, int par){
+    cout<<cur<<" ";
+    for(auto to : adj[cur])
+        if(to!=par)
+        dfs(to,cur);
 }
 
 int main (){
