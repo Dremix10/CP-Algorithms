@@ -16,8 +16,7 @@ int main (){
     cin>>n;
 
     int i;
-    int root;
-    cin>>root;
+    int root=1;
     
     for(i=0;i<n-1;i++){
         int x,y;
