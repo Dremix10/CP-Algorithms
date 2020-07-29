@@ -1,17 +1,17 @@
-#include<bits/stdc++.h>
-#define N (int)(1e5+1)
+#include <bits/stdc++.h>
+#define N (int)(2e5+1)
 using namespace std;
 
 vector<vector<int> > adj(N,vector<int>());
 int subtree[N];
 
-void dfs(int cur, int par){
-    subtree[cur] = 1;
+void dfs(int curr, int prev){
+    subtree[curr] = 1;
 
-    for(auto to : adj[cur])
-        if(to!=par){
-            dfs(to,cur);
-            subtree[cur] += subtree[to];
+    for(auto nxt : adj[curr])
+        if(nxt!=prev){
+            dfs(nxt,curr);
+            subtree[curr] += subtree[nxt];
         }
 }
 

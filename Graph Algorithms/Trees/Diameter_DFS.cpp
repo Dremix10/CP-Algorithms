@@ -5,14 +5,13 @@ using namespace std;
 vector<vector<int> > adj(N,vector<int>());  
 int depth[N];
 
-void dfs(int cur, int par){
+void dfs(int curr, int prev){
 
-    for(auto to : adj[cur])
-        if(to!=par){
-            depth[to] = depth[cur] + 1;
-            dfs(to,cur);
+    for(auto nxt : adj[curr])
+        if(nxt!=prev){
+            depth[nxt] = depth[curr] + 1;
+            dfs(nxt,curr);
         }
-
 }
 
 
@@ -48,4 +47,5 @@ int main (){
         diameter = max(diameter,depth[i]);
 
     cout<<diameter<<endl;
+    
 }
