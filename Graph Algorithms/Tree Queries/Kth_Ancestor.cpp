@@ -15,7 +15,6 @@ void dfs(int curr, int prev){
     for(auto nxt : adj[curr])
         if(nxt!=prev)
             dfs(nxt,curr);
-        
 }
 
 int kth_ancestor(int curr, int k){
@@ -24,7 +23,6 @@ int kth_ancestor(int curr, int k){
     while(k>0){
         if(k&1)
             curr = binLift[curr][currPow];
-        
         currPow++;
         k>>=1;
     }
@@ -52,10 +50,8 @@ int main (){
         int node,k;
         cin>>node>>k;
         int kth = kth_ancestor(node,k);
-        if(kth==0)
-            kth--;
+        // kth = 0 means there's no such kth ancestor
         cout<<kth<<endl;
     }
-
 
 }
