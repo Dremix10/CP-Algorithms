@@ -54,11 +54,11 @@ int main (){
     int i;
     int root = 1;
     
-    for(i=2;i<=n;i++){
-        int x;
-        cin>>x;
-        adj[x].push_back(i);
-        adj[i].push_back(x);
+    for(i=0;i<n-1;i++){
+        int x,y;
+        cin>>x>>y;
+        adj[x].push_back(y);
+        adj[y].push_back(x);
     }
     dfs(root,0);
 
@@ -66,7 +66,8 @@ int main (){
     while(q--){
         int x,y;
         cin>>x>>y;
-        cout<<lca(x,y)<<endl;
+        int u = lca(x,y);
+        cout<<u<<endl;
     }
 
 }
