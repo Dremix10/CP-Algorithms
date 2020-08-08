@@ -3,14 +3,12 @@
 using namespace std;
 
 struct DSU{
-    int par[N];
-    int siz[N];
+    vector<int> par,siz;
     
     void init(int n){
-        for(int i=1;i<=n;i++){
-            par[i] = i;
-            siz[i] = 1;
-        }
+        par.assign(n+1,0);
+        siz.assign(n+1,1);
+        iota(par.begin(),par.end(),0);
     }
 
     int find(int x){

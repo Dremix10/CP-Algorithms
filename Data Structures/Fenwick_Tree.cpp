@@ -5,13 +5,12 @@ const int N = 2e5+1;
 
 template <typename T>
 struct BIT{
-    T bit[N];
+    vector<T> bit;
     int N;
 
     void init(int n){
         N = n;
-        for(int i=0;i<=n;i++)
-            bit[i] = 0;
+        bit.assign(n+1,0);
     }
 
     void update(int pos, T val){
