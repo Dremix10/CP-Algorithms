@@ -11,7 +11,7 @@ ll rnd(ll l, ll r){return distribution(rng)%(r-l+1)+l;}
 const int HS = 3;
 int mod[HS];
 
-struct custom_hash{
+struct custom_hash{ // !* SOS should assign mod array values for functionality *!
     int val[HS];
     custom_hash(){ fill(val,val+HS,0); }
     custom_hash(ll x){
