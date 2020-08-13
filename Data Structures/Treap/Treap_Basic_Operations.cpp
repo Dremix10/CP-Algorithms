@@ -24,32 +24,33 @@ struct TREAP{
     };
     vector<node> treap;
     int mainRoot;
+    bool key_exists;
 
     TREAP() : mainRoot(0){
         treap.push_back(node());
     }
-
+    
     // updates node data after changes
     void upd(int x){
         treap[x].cntSub = treap[treap[x].l].cntSub + treap[treap[x].r].cntSub + 1;
     }
-
+    
     // debugging tools
     void look_tree(int root){
         if(root == 0)
             return;
         look_tree(treap[root].l);
-        cout<<treap[root].key<<" ";
+        cerr<<treap[root].key<<" ";
         look_tree(treap[root].r);
     }
 
+    // debugging tools
     void debug_tree(int root){
-        cout<<"root of tree: "<<treap[root].key<<endl;
+        cerr<<"root of tree: "<<treap[root].key<<endl;
         look_tree(root);
-        cout<<endl;
+        cerr<<endl;
     }
 
-    bool key_exists;
     // split subtree of root with elements <= key to the left subtree and rest to the right
     pi split(int root, T key){
         if(root == 0)
@@ -126,7 +127,7 @@ struct TREAP{
         return false;
     }
 
-    // returns left_most key if it exists otherwise boolean will be false
+    // returns left_most key of subtree if it exists otherwise boolean will be false
     pair<T,bool> get_left(int root){
         if(root == 0)
             return make_pair(0,false);
@@ -135,6 +136,7 @@ struct TREAP{
         return make_pair(treap[root].key,true);
     }
 
+    // returns right_most key of subtree if it exists otherwise boolean will be false
     pair<T,bool> get_right(int root){
         if(root == 0)
             return make_pair(0,false);
@@ -164,8 +166,7 @@ struct TREAP{
     }
 
     // returns kth element if it exists otherwise boolean will be false (1-indexed)
-    // *! can be modified to return index of node for more data !*
-    pair<T,bool> kth_element(int k){
+    pair<T,bool> kth_element(int k){ // *! can be modified to return index of node for more data !*
         int curr = mainRoot;
         while(curr){
             if(treap[treap[curr].l].cntSub + 1 == k)
@@ -180,18 +181,20 @@ struct TREAP{
         return make_pair(0,false);
     }
 
+    // clears treap and re-initializes
     void clear(){
         treap.clear();
         treap.push_back(node());
         mainRoot = 0;
     }
 
-    // initialization doesn't sort
+    // initialization with array - should be sorted otherwise treap will break
     void init_array(int n, T arr[]){
         for(int i = 0;i < n;i ++)
             mainRoot = merge(mainRoot,new_node(arr[i]));
     }
 
+    // initialization with vector - should be sorted otherwise treap will break
     void init_vector(int n, vector<T> &arr){
         for(auto key : arr)
             mainRoot = merge(mainRoot,new_node(key));
