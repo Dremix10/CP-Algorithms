@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
+typedef long long ll;
 
 template<typename T>
 struct SEGTREE{
@@ -41,7 +42,7 @@ struct SEGTREE{
 
     void update(int s, int e, int idx, int k, T val){
         if(s==e && s==k){
-            seg[idx].val = val;
+            seg[idx].val += val;
             return;            
         }
         if(s>k || e<k)
@@ -52,6 +53,7 @@ struct SEGTREE{
         seg[idx] = merge(seg[idx*2],seg[idx*2+1]);
     }
 
+    // arr[k] += val
     void update(int k, T val){
         update(1,N,1,k,val);
     }
@@ -76,19 +78,29 @@ int main (){
     int n,q;
     cin>>n>>q;
 
-    SEGTREE<long long> seg;
+    SEGTREE<ll> seg;
     seg.init(n);
 
-    long long arr[n+1];
+    ll arr[n+1];
     for(int i = 1;i <= n;i ++)
         cin>>arr[i];
     
     seg.build(arr);
 
     while(q--){
-        int l,r;
-        cin>>l>>r;
-        cout<<seg.query(l,r)<<endl;
+        string type;
+        cin>>type;
+        if(type == "ADD"){
+            int k;
+            ll x;
+            cin>>k>>x;
+            seg.update(k,x);
+        }
+        else if(type == "SUM"){
+            int l,r;
+            cin>>l>>r;
+            cout<<seg.query(l,r)<<endl;
+        }
     }
 
 }
