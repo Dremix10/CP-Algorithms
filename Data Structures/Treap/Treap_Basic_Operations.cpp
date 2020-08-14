@@ -20,7 +20,7 @@ struct TREAP{
         ll y;
 
         node() : key(0), y(0), l(0), r(0), cnt(0), sum(0) {}
-        node(int _key) : key(_key), y(rnd(1,INF)), l(0), r(0), cnt(1), sum(_key) {}
+        node(T _key) : key(_key), y(rnd(1,INF)), l(0), r(0), cnt(1), sum(_key) {}
     };
     vector<node> treap;
     int mainRoot;
