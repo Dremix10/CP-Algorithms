@@ -15,12 +15,12 @@ ll rnd(ll l, ll r){return distribution(rng)%(r-l+1)+l;}
 template<typename T>
 struct TREAP{
     struct node{
-        T key;
-        int l,r,cntSub; // cntSub counts nodes in current subtree
+        T key,sum;
+        int l,r,cnt; // cnt = nodes in current subtree
         ll y;
 
-        node() : key(0), y(0), l(0), r(0), cntSub(0) {}
-        node(int _key) : key(_key), y(rnd(1,INF)), l(0), r(0), cntSub(1) {}
+        node() : key(0), y(0), l(0), r(0), cnt(0), sum(0) {}
+        node(int _key) : key(_key), y(rnd(1,INF)), l(0), r(0), cnt(1), sum(_key) {}
     };
     vector<node> treap;
     int mainRoot;
@@ -32,7 +32,8 @@ struct TREAP{
     
     // updates node data after changes
     void upd(int x){
-        treap[x].cntSub = treap[treap[x].l].cntSub + treap[treap[x].r].cntSub + 1;
+        treap[x].cnt = treap[treap[x].l].cnt + treap[treap[x].r].cnt + 1;
+        treap[x].sum = treap[treap[x].l].sum + treap[treap[x].r].sum + treap[x].key;
     }
     
     // debugging tools
@@ -66,6 +67,25 @@ struct TREAP{
         }
         else{ // right subtree of root including root remain unchanged
             pi temp = split(treap[root].l,key);
+            treap[root].l = temp.S;
+            upd(root);
+            return make_pair(temp.F,root);
+        }
+    }
+
+    // split subtree of root with first (cnt) elements to the left subtree and rest to the right 
+    pi split_by_cnt(int root, int cnt){
+        if(root == 0)
+            return make_pair(0,0);
+        
+        if(treap[treap[root].l].cnt + 1 <= cnt){
+            pi temp = split_by_cnt(treap[root].r,cnt - treap[treap[root].l].cnt - 1);
+            treap[root].r = temp.F;
+            upd(root);
+            return make_pair(root,temp.S);
+        }
+        else{
+            pi temp = split_by_cnt(treap[root].l,cnt);
             treap[root].l = temp.S;
             upd(root);
             return make_pair(temp.F,root);
@@ -169,12 +189,12 @@ struct TREAP{
     pair<T,bool> kth_element(int k){ // *! can be modified to return index of node for more data !*
         int curr = mainRoot;
         while(curr){
-            if(treap[treap[curr].l].cntSub + 1 == k)
+            if(treap[treap[curr].l].cnt + 1 == k)
                 return make_pair(treap[curr].key,true);
-            if(treap[treap[curr].l].cntSub >= k)
+            if(treap[treap[curr].l].cnt >= k)
                 curr = treap[curr].l;
             else{
-                k -= treap[treap[curr].l].cntSub + 1;
+                k -= treap[treap[curr].l].cnt + 1;
                 curr = treap[curr].r;
             }
         }
