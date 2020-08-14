@@ -4,8 +4,10 @@ using namespace std;
 
 struct DSU{
     vector<int> par,siz;
+    int cnt;
     
     void init(int n){
+        cnt = n;
         par.assign(n+1,0);
         siz.assign(n+1,1);
         iota(par.begin(),par.end(),0);
@@ -24,6 +26,7 @@ struct DSU{
         
         siz[x] += siz[y];
         par[y] = x;
+        cnt--;
     }
 
 };
