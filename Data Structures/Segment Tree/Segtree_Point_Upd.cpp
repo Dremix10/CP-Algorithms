@@ -26,7 +26,7 @@ struct SEGTREE{
 
     void build(int s, int e, int idx, T arr[]){
         if(s == e){
-            seg[idx].val = arr[s];
+            seg[idx].val = node(arr[s]);
             return;
         }
         int mid = (s+e)/2;
