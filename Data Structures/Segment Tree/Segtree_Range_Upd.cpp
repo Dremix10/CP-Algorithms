@@ -59,8 +59,8 @@ struct SEGTREE{
             return;
         int mid = (s+e)/2;
         push(seg[idx],seg[idx*2],seg[idx*2+1]);
-        update(s,mid,idx*2,k,val);
-        update(mid+1,e,idx*2+1,k,val);
+        update(s,mid,idx*2,qs,qe,val);
+        update(mid+1,e,idx*2+1,qs,qe,val);
         seg[idx] = merge(seg[idx*2],seg[idx*2+1]);
     }
 
@@ -75,7 +75,7 @@ struct SEGTREE{
         if(s>qe || e<qs)
             return node();
         int mid = (s+e)/2;
-        push(seg[idx],seg[idx*2],seg[idx*2+1]]);
+        push(seg[idx],seg[idx*2],seg[idx*2+1]);
         return merge(query(s,mid,idx*2,qs,qe),query(mid+1,e,idx*2+1,qs,qe));
     }
 
