@@ -25,17 +25,17 @@ struct SEGTREE{
         return res;
     }
 
-    void push(node &par, node &x, node &y){
-        x.val += par.lazy;
+    void push(node &par, node &x, node &y, int r1, int r2){
+        x.val += par.lazy * r1;
         x.lazy += par.lazy;
-        y.val += par.lazy;
+        y.val += par.lazy * r2;
         y.lazy += par.lazy;
         par.lazy = 0;
     }
 
     void build(int s, int e, int idx, T arr[]){
         if(s == e){
-            seg[idx].val = node(arr[s]);
+            seg[idx] = node(arr[s]);
             return;
         }
         int mid = (s+e)/2;
@@ -51,14 +51,14 @@ struct SEGTREE{
 
     void update(int s, int e, int idx, int qs, int qe, T val){
         if(qs<=s && e<=qe){
-            seg[idx].val += val;
+            seg[idx].val += val * (e-s+1);
             seg[idx].lazy += val;
             return;            
         }
         if(s>qe || e<qs)
             return;
         int mid = (s+e)/2;
-        push(seg[idx],seg[idx*2],seg[idx*2+1]);
+        push(seg[idx],seg[idx*2],seg[idx*2+1],mid-s+1,e-mid);
         update(s,mid,idx*2,qs,qe,val);
         update(mid+1,e,idx*2+1,qs,qe,val);
         seg[idx] = merge(seg[idx*2],seg[idx*2+1]);
@@ -75,7 +75,7 @@ struct SEGTREE{
         if(s>qe || e<qs)
             return node();
         int mid = (s+e)/2;
-        push(seg[idx],seg[idx*2],seg[idx*2+1]);
+        push(seg[idx],seg[idx*2],seg[idx*2+1],mid-s+1,e-mid);
         return merge(query(s,mid,idx*2,qs,qe),query(mid+1,e,idx*2+1,qs,qe));
     }
 
