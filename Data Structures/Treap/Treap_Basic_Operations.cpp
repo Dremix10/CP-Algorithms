@@ -35,11 +35,17 @@ struct TREAP{
         treap[x].cnt = treap[treap[x].l].cnt + treap[treap[x].r].cnt + 1;
         treap[x].sum = treap[treap[x].l].sum + treap[treap[x].r].sum + treap[x].key;
     }
-    
+
+    // push lazy propagation to children
+    void push(int x){
+        // add stuff on need
+    }
+
     // debugging tools
     void look_tree(int root){
         if(root == 0)
             return;
+        push(root);
         look_tree(treap[root].l);
         cerr<<treap[root].key<<" ";
         look_tree(treap[root].r);
@@ -59,6 +65,7 @@ struct TREAP{
         if(treap[root].key == key)
             key_exists = true;
         
+        push(root);
         if(treap[root].key <= key){ // left subtree of root including root remain unchanged
             pi temp = split(treap[root].r,key);
             treap[root].r = temp.F;
@@ -78,6 +85,8 @@ struct TREAP{
         if(root == 0)
             return make_pair(0,0);
         
+        push(rootL);
+        push(rootR);
         if(treap[treap[root].l].cnt + 1 <= cnt){
             pi temp = split_by_cnt(treap[root].r,cnt - treap[treap[root].l].cnt - 1);
             treap[root].r = temp.F;
