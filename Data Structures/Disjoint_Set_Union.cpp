@@ -17,16 +17,17 @@ struct DSU{
         return (par[x]==x) ? x : par[x] = find(par[x]);
     }
 
-    void merge(int x, int y){
+    bool merge(int x, int y){
         x = find(x);
         y = find(y);
-        if(x==y)return;
+        if(x==y)return false;
         if(siz[x]<siz[y])
             swap(x,y);
         
         siz[x] += siz[y];
         par[y] = x;
         cnt--;
+        return true;
     }
 
 };
