@@ -4,19 +4,26 @@ const int N = 2e5+1;
 
 vector<vector<pair<int,int> > > adj(N);
 
+struct edge{
+    int x,y,w;
+    bool operator<(const edge &a)const{
+        return w>a.w;
+    }
+};
+
 int MST(int start){
     bool v[N] = {};
     v[start] = true;
 
-    priority_queue<pair<int,pair<int,int> > > q;
+    priority_queue<edge> q;
     for(auto nxt : adj[start])
-        q.push(make_pair(-nxt.second,make_pair(start,nxt.first)));
+        q.push({start,nxt.first,nxt.second});
 
     int mst = 0;
     while(!q.empty()){
-        int cost = -q.top().first;
-        int prev = q.top().second.first;
-        int curr = q.top().second.second;
+        int cost = q.top().w;
+        int prev = q.top().x;
+        int curr = q.top().y;
         q.pop();
         if(v[curr])continue;
         v[curr] = true;
@@ -25,7 +32,7 @@ int MST(int start){
         cout<<prev<<" "<<curr<<endl;
 
         for(auto nxt : adj[curr])
-            q.push(make_pair(-nxt.second,make_pair(curr,nxt.first)));
+            q.push({curr,nxt.first,nxt.second});
     }
     return mst;
 }
