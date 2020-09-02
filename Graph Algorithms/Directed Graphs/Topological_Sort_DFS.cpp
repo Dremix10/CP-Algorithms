@@ -31,6 +31,8 @@ int main (){
     }
     reverse(topo.begin(),topo.end());
 
+    // can check for cycles with an addition in DFS
+    // current implementation is for an acyclic graph
     for(auto x : topo)
         cout<<x<<" ";
     cout<<endl;
