@@ -6,7 +6,6 @@ vector<vector<int> > adj(N,vector<int>());
 int depth[N];
 
 void dfs(int curr, int prev){
-    depth[curr] = 0;
 
     for(auto nxt : adj[curr])
         if(nxt!=prev){
