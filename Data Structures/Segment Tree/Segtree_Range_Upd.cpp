@@ -8,6 +8,7 @@ struct SEGTREE{
         T val; // for adding more stuff
         T lazy; 
 
+        /// ***NOTE: CHANGE DEFAULT VALUE WHEN CHANGING OPERATION (i.e. MIN -> use INF instead of 0)
         node() : val(0), lazy(0) {}
         node(T _val) : val(_val), lazy(0) {}
     };
